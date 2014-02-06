@@ -1,500 +1,351 @@
-
-
 function FirstView() {
-		var osname = Ti.Platform.osname;
+	var osname = Ti.Platform.osname;
+	var isAndroid = (osname=='android') ? true : false;
+	var isRetina = Titanium.Platform.displayCaps.platformHeight > 500 ? true: false; 
 	
-		var isAndroid = (osname=='android') ? true : false;
-		var mapModule = null;
-		if ( isAndroid ) {
-			MapModule = require('ti.map');
-		}
-		// Create a view with buttons to navigate to different pages
-		
-		var self = Ti.UI.createView({
-	//		backgroundColor:'#C1D6D6',
-			backgroundColor:'#000000',
-			top:0,
-			left:0,
-			width:'100%',
-			height:'100%',
-			layout:'vertical'
+	var self = Ti.UI.createView({
+//		backgroundColor:'#C1D6D6',
+		backgroundColor:'#000000',
+		top:0,
+		left:0,
+		width:'100%',
+		height:'100%',
+		layout:'vertical'
+	});
+	var headingLabel;
+	if(osname == 'iphone')
+	{
+		headingLabel = Titanium.UI.createLabel({
+			//color: '#900',
+  			color: '#ffffff',
+  			font: { fontSize:20 },
+  			shadowColor: '#aaa',
+  			shadowOffset: {x:1, y:1},
+  			shadowRadius: 3,
+  			text: 'Welcome to Global Markets',
+  			textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
+  			top: 20
 		});
-		var headingLabel;
-		if( isAndroid )
-		{
-			headingLabel = Titanium.UI.createLabel({
-				//color: '#900',
-	  			color: '#ffffff',
-	  			font: { fontSize:40 },
-	  			shadowColor: '#aaa',
-	  			shadowOffset: {x:5, y:5},
-	  			shadowRadius: 3,
-	  			text: 'Welcome to Global Markets',
-	  			textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
-	  			top: 20
-			});
-		} else if(osname == 'ipad')
-		{
-			headingLabel = Titanium.UI.createLabel({
-				//color: '#900',
-	  			color: '#ffffff',
-	  			font: { fontSize:40 },
-	  			shadowColor: '#aaa',
-	  			shadowOffset: {x:1, y:1},
-	  			shadowRadius: 3,
-	  			text: 'Welcome to Global Markets',
-	  			textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
-	  			top: 20
-			});
-		} else{
-			headingLabel = Titanium.UI.createLabel({
-				//color: '#900',
-	  			color: '#ffffff',
-	  			font: { fontSize:20 },
-	  			shadowColor: '#aaa',
-	  			shadowOffset: {x:1, y:1},
-	  			shadowRadius: 3,
-	  			text: 'Welcome to Global Markets',
-	  			textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
-	  			top: 20
-			});
-		}
-		
-		var useacbutton;
-		var searchHS;
-		var searchNAICS;
-		var callTICbutton;
-		var staffbutton;
-		if( isAndroid )
-		{
-			useacbutton = Titanium.UI.createButton({
-	   			title: 'Nearest Export Assistance Center',
-	   			image: '/images/CSLogoIconSize.png',
-	   	//		backgroundColor:'#33CC33',
-	   	//		selectedColor:'#33CCFF',
-	   			borderRadius: 10,
-	   //			style: Titanium.UI.iPhone.SystemButtonStyle.BORDERED,
-	   			top: 20,
-	   			width: '80%',
-	   			height: '10%'
-	 		});
-	 		searchHS = Titanium.UI.createButton({
-	 			title: 'Search HS Codes',
-	 			image: '/images/ic_action_search.png',
-	 			top: 20,
-	 			width: '80%',
-	 			height: '10%'
-	 		});
-	 		searchNAICS = Titanium.UI.createButton({
-	 			title: 'Search NAICS Codes',
-	 			image: '/images/ic_action_search.png',
-	 			top: 20,
-	 			width: '80%',
-	 			height: '10%'
-	 		});
-	 		
-			callTICbutton = Titanium.UI.createButton({
-	   			title: 'Trade Information Center',
-	   			top: 20,
-	   			//icon:'/images/phone-icon.png',
-	   			image:'/images/phone-icon.png',
-	   			//backgroundImage: '/images/phone-icon.png',
-	   			borderRadius: 10,
-	//   			backgroundColor: '#CC9900',
-	//   			selectedColor:'#CC99FF',
-	//   			style: Titanium.UI.iPhone.SystemButtonStyle.BORDERED,
-	   			width: '80%',
-	   			height: '10%'
-	 		});
-	 		
-			staffbutton = Titanium.UI.createButton({
-	   			title: 'Contact Us',
-	   			borderRadius: 10,
-	   	//		style: Titanium.UI.iPhone.SystemButtonStyle.BORDERED,
-		//		backgroundColor: '#33CC33',
-		//		selectedColor: '#CC99FF',
-	   			top: 20,
-	   			width: '80%',
-	   			height: '10%'
-	   		});
-	   	}
-	   	else if(osname == 'ipad')
-	   	{
-			useacbutton = Titanium.UI.createButton({
-	   			title: 'Nearest Export Assistance Center',
-	   			backgroundImage: '/images/CSLogoIconSize-pad.png',
-	   			font: { fontSize:20 },
-	   			//tintColor: '#0000FF',
-	   			//backgroundColor:'#33CC33',
-	   			//selectedColor:'#33CCFF',
-	   			opacity: 1,
-	   			color: '#4989ff',
-	   			borderRadius: 10,
-	   			//style: Titanium.UI.iPhone.SystemButtonStyle.BORDERED,
-	   			top: 30,
-	   			backgroundColor: '#e1e1e1',
-	   			width: '90%',
-	   			height: '8%'
-	 		});		 	
-	 		searchHS = Titanium.UI.createButton({
-	 			title: 'Search HS Codes',
-	 			backgroundImage: '/images/ic_action_search-pad.png',
-	   			font: { fontSize:20 },
-	   			color: '#4989ff',
-	 			top: 30,
-	 			borderRadius: 10,
-	 			backgroundColor: '#e1e1e1',
-	 			width: '90%',
-	 			height: '8%'
-	 		});
-	 		searchNAICS = Titanium.UI.createButton({
-	 			title: 'Search NAICS Codes',
-	 			backgroundImage: '/images/ic_action_search-pad.png',
-	   			font: { fontSize:20 },
-	   			color: '#4989ff',
-	 			top: 30,
-	 			borderRadius: 10,
-	 			backgroundColor: '#e1e1e1',
-	 			width: '90%',
-	 			height: '8%'
-	 		});
-	 		
-			callTICbutton = Titanium.UI.createButton({
-	   			title: 'Trade Information Center',
-	   			top: 30,
-	   			color: '#4989ff',
-	   			font: { fontSize:20 },
-	   			//icon:'/images/phone-icon.png',
-	   			backgroundImage:'/images/phone-icon-pad.png',
-	   			//backgroundImage: '/images/phone-icon.png',
-	   			borderRadius: 10,
-	   			//tintColor: '#FFFFFF',
-	   			
-	   			backgroundColor: '#e1e1e1',
-	   			//selectedColor:'#CC99FF',
-	   			//style: Titanium.UI.iPhone.SystemButtonStyle.BORDERED,
-	   			width: '90%',
-	   			height: '8%'
-	 		});
-	 		
-			staffbutton = Titanium.UI.createButton({
-	   			title: 'Contact Us',
-	   			borderRadius: 10,
-	   			color: '#4989ff',
-	   			//style: Titanium.UI.iPhone.SystemButtonStyle.BORDERED,
-				backgroundColor: '#e1e1e1',
-				//selectedColor: '#CC99FF',
-	   			top: 10,
-	   			width: '90%',
-	   			height: '8%'
-	   		});	   		
-	   	} else {
-	   		alert(Titanium.Platform.displayCaps.platformHeight);
-			useacbutton = Titanium.UI.createButton({
-	   			title: '		Nearest Export Assistance Center',
-	   			backgroundImage: '/images/CSLogoIconSize.png',
-	   			//tintColor: '#0000FF',
-	   			//backgroundColor:'#33CC33',
-	   			//selectedColor:'#33CCFF',
-	   			font: { fontSize:14 },
-	   			opacity: 1,
-	   			color: '#4989ff',
-	   			borderRadius: 10,
-	   			//style: Titanium.UI.iPhone.SystemButtonStyle.BORDERED,
-	   			top: (Titanium.Platform.displayCaps.platformHeight > 500) ? 20 : 13,
-	   			backgroundColor: '#e1e1e1',
-	   			width: '90%',
-	   			height: '8%'
-	 		});		 	
-	 		searchHS = Titanium.UI.createButton({
-	 			title: '	Search HS Codes',
-	 			backgroundImage: '/images/ic_action_search.png',
-	   			font: { fontSize:14 },
-	   			color: '#4989ff',
-	   			top: (Titanium.Platform.displayCaps.platformHeight > 500) ? 20 : 13,
-	 			borderRadius: 10,
-	 			backgroundColor: '#e1e1e1',
-	 			width: '90%',
-	 			height: '8%'
-	 		});
-	 		searchNAICS = Titanium.UI.createButton({
-	 			title: '	Search NAICS Codes',
-	 			backgroundImage: '/images/ic_action_search.png',
-	   			top: (Titanium.Platform.displayCaps.platformHeight > 500) ? 20 : 13,
-	   			font: { fontSize:14 },
-	   			color: '#4989ff',
-	 			borderRadius: 10,
-	 			backgroundColor: '#e1e1e1',
-	 			width: '90%',
-	 			height: '8%'
-	 		});
-	 		
-			callTICbutton = Titanium.UI.createButton({
-	   			title: '	Trade Information Center',
-	   			top: (Titanium.Platform.displayCaps.platformHeight > 500) ? 20 : 13,
-	   			font: { fontSize:14 },
-	   			color: '#4989ff',
-	   			//icon:'/images/phone-icon.png',
-	   			backgroundImage:'/images/phone-icon.png',
-	   			//backgroundImage: '/images/phone-icon.png',
-	   			borderRadius: 10,
-	   			//tintColor: '#FFFFFF',
-	   			
-	   			backgroundColor: '#e1e1e1',
-	   			//selectedColor:'#CC99FF',
-	   			//style: Titanium.UI.iPhone.SystemButtonStyle.BORDERED,
-	   			width: '90%',
-	   			height: '8%'
-	 		});
-	 		
-			staffbutton = Titanium.UI.createButton({
-	   			title: 'Contact Us',
-	   			borderRadius: 10,
-	   			color: '#4989ff',
-	   			//style: Titanium.UI.iPhone.SystemButtonStyle.BORDERED,
-				backgroundColor: '#e1e1e1',
-				//selectedColor: '#CC99FF',
-	   			top: 10,
-	   			width: '90%',
-	   			height: '8%'
-	   		});	   		   		
-	   	}
-   		var mapView = MapView(10);
-   		useacbutton.addEventListener('click', function  (e) {
-			if (mapView == null) { alert ('Cant get to map view - use a global');}
-			else { 
-				//var MapModule = require('ti.map');
+	} else{
+		headingLabel = Titanium.UI.createLabel({
+			//color: '#900',
+  			color: '#ffffff',
+  			font: { fontSize:40 },
+  			shadowColor: '#aaa',
+  			shadowOffset: {x:1, y:1},
+  			shadowRadius: 3,
+  			text: 'Welcome to Global Markets',
+  			textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
+  			top: 20
+		});
+	}
 	
-				if( Titanium.Geolocation.locationServicesEnabled === false ) {
-    				alert('Your device has GPS turned off. Please turn it on.');
+	var useacbutton;
+	var searchHS;
+	var searchNAICS;
+	var callTICbutton;
+	var staffbutton;
+	var buttonTop = (osname=='android' || osname=='ipad') ? 20 : 7;
+	buttonTop = (isRetina &&  osname=='iphone') ? 10 : buttonTop;
+	var fntSize = (osname=='android' || osname=='ipad') ? 20 : 14;
+   	if(osname != 'iphone')
+   	{
+		useacbutton = Titanium.UI.createButton({
+   			title: 'Nearest Export Assistance Center',
+   			backgroundImage: '/images/CSLogoIconSize-pad.png',
+   			font: { fontSize:20 },
+   			opacity: 1,
+   			color: '#4989ff',
+   			borderRadius: 10,
+   			top: buttonTop,
+   			backgroundColor: '#e1e1e1',
+   			width: '90%',
+   			height: '8%'
+ 		});		 	
+ 		searchHS = Titanium.UI.createButton({
+ 			title: 'Search HS Codes',
+ 			backgroundImage: '/images/ic_action_search-pad.png',
+   			font: { fontSize:20 },
+   			color: '#4989ff',
+ 			top: buttonTop,
+ 			borderRadius: 10,
+ 			backgroundColor: '#e1e1e1',
+ 			width: '90%',
+ 			height: '8%'
+ 		});
+ 		searchNAICS = Titanium.UI.createButton({
+ 			title: 'Search NAICS Codes',
+ 			backgroundImage: '/images/ic_action_search-pad.png',
+   			font: { fontSize:20 },
+   			color: '#4989ff',
+ 			top: buttonTop,
+ 			borderRadius: 10,
+ 			backgroundColor: '#e1e1e1',
+ 			width: '90%',
+ 			height: '8%'
+ 		});
+ 		
+		callTICbutton = Titanium.UI.createButton({
+   			title: 'Trade Information Center',
+   			top: buttonTop,
+   			color: '#4989ff',
+   			font: { fontSize:20 },
+   			backgroundImage:'/images/phone-icon-pad.png',
+   			borderRadius: 10,
+   			backgroundColor: '#e1e1e1',
+   			width: '90%',
+   			height: '8%'
+ 		});
+ 		
+		staffbutton = Titanium.UI.createButton({
+   			title: 'Contact Us',
+   			borderRadius: 10,
+   			color: '#4989ff',
+   			font: { fontSize:20 },
+			backgroundColor: '#e1e1e1',
+   			top: buttonTop,
+   			width: '90%',
+   			height: '8%'
+   		});	   		
+   	} else {
+   		
+		useacbutton = Titanium.UI.createButton({
+   			title: '		Nearest Export Assistance Center',
+   			backgroundImage: '/images/CSLogoIconSize.png',
+   			font: { fontSize:14 },
+   			opacity: 1,
+   			color: '#4989ff',
+   			borderRadius: 10,
+   			top: buttonTop,
+   			backgroundColor: '#e1e1e1',
+   			width: '90%',
+   			height: '8%'
+ 		});		 	
+ 		searchHS = Titanium.UI.createButton({
+ 			title: '	Search HS Codes',
+ 			backgroundImage: '/images/ic_action_search.png',
+   			font: { fontSize:14 },
+   			color: '#4989ff',
+   			top: buttonTop,
+ 			borderRadius: 10,
+ 			backgroundColor: '#e1e1e1',
+ 			width: '90%',
+ 			height: '8%'
+ 		});
+ 		searchNAICS = Titanium.UI.createButton({
+ 			title: '	Search NAICS Codes',
+ 			backgroundImage: '/images/ic_action_search.png',
+   			top: buttonTop,
+   			font: { fontSize:14 },
+   			color: '#4989ff',
+ 			borderRadius: 10,
+ 			backgroundColor: '#e1e1e1',
+ 			width: '90%',
+ 			height: '8%'
+ 		});
+ 		
+		callTICbutton = Titanium.UI.createButton({
+   			title: '	Trade Information Center',
+   			top: buttonTop,
+   			font: { fontSize:14 },
+   			color: '#4989ff',
+   			backgroundImage:'/images/phone-icon.png',
+   			borderRadius: 10,
+   			backgroundColor: '#e1e1e1',
+   			width: '90%',
+   			height: '8%'
+ 		});
+ 		
+		staffbutton = Titanium.UI.createButton({
+   			title: 'Contact Us',
+   			borderRadius: 10,
+   			top: buttonTop,
+   			font: { fontSize:14 },
+			backgroundColor: '#e1e1e1',
+   			width: '90%',
+   			height: '8%'
+   		});	   		   		
+   	}
+	var mapView = MapView(10);
+	useacbutton.addEventListener('click', function  (e) {
+		if (mapView == null) { alert ('Cant get to map view - use a global');}
+		else { 
+			if( Titanium.Geolocation.locationServicesEnabled === false ) {
+				alert('Your device has GPS turned off. Please turn it on.');
+				return;
+			}
+			// Get current position and find the USEAC closest to it
+			Titanium.Geolocation.getCurrentPosition(function (e) {
+				if (e.error)
+				{
+    				alert('Cannot get your current location. Make sure your device has GPS turned on.');
     				return;
 				}
-				// Get current position and find the USEAC closest to it
-				Titanium.Geolocation.getCurrentPosition(function (e) {
-					if (e.error)
-    				{
-        				alert('Cannot get your current location. Make sure your device has GPS turned on.');
-        				return;
-    				}
-    				var i = 0;
-					var closestUSEAC = mapNearest(e.coords.latitude, e.coords.longitude);
-					mapView.setRegion({latitude: closestUSEAC.lat,  longitude: closestUSEAC.lng, latitudeDelta: 0.1, longitudeDelta: 0.1 });
-					var annot = null;
-					if ( isAndroid ) {
-						annot = MapModule.createAnnotation({
-    						 				latitude:closestUSEAC.lat,
-    										longitude:closestUSEAC.lng,
-    										myid:i++,
-    										city:closestUSEAC.city,
-    										state:closestUSEAC.state});
-					} else {
-						var Map = require('ti.map');
-						var win = Titanium.UI.createWindow();
-						
-						annot= Map.createAnnotation({
-						    latitude:closestUSEAC.lat,
-						    longitude:closestUSEAC.lng,
-						    city:closestUSEAC.city,
-						    state:closestUSEAC.state,
-						    myid:i++ // Custom property to uniquely identify this annotation.
-						});
-						/*
-						annot = Ti.Map.createAnnotation({
-    						 				latitude:closestUSEAC.lat,
-    										longitude:closestUSEAC.lng,
-    										myid:i++,
-    										city:closestUSEAC.city,
-    										state:closestUSEAC.state});
-    					*/
-					}
-					mapView.addAnnotation(annot);
-    													
-    			});	
+				var i = 0;
+				var closestUSEAC = mapNearest(e.coords.latitude, e.coords.longitude);
+				mapView.setRegion({latitude: closestUSEAC.lat,  longitude: closestUSEAC.lng, latitudeDelta: 0.1, longitudeDelta: 0.1 });
+				var annot = null;
+				var Map = require('ti.map');
+				var win = Titanium.UI.createWindow();
 				
-				
-			}
-		});
-		
- 		callTICbutton.addEventListener('click',function(e)
-		{
-			if (isAndroid) {
-				var intent = Ti.Android.createIntent({
-					action: Ti.Android.ACTION_CALL,
-					data: 'tel:1-800-872-8723'
+				annot= Map.createAnnotation({
+				    latitude:closestUSEAC.lat,
+				    longitude:closestUSEAC.lng,
+				    city:closestUSEAC.city,
+				    state:closestUSEAC.state,
+				    myid:i++ // Custom property to uniquely identify this annotation.
 				});
-				Ti.Android.currentActivity.startActivity(intent);
-		  	} else{
-		  		//alert(Titanium.Platform);
-				Titanium.Platform.openURL('tel:18008728723');		  		
-		  	}
+				mapView.addAnnotation(annot);
+			});	
+		}
+	});
+	
+	callTICbutton.addEventListener('click',function(e)
+	{
+		if (isAndroid) {
+			var intent = Ti.Android.createIntent({
+				action: Ti.Android.ACTION_CALL,
+				data: 'tel:1-800-872-8723'
+			});
+			Ti.Android.currentActivity.startActivity(intent);
+	  	} else{
+			Titanium.Platform.openURL('tel:18008728723');		  		
+	  	}
+	});
+	
+	
+	self.add(headingLabel);
+	self.add(mapView);
+	self.add(useacbutton);
+	self.add(searchHS);
+	self.add(searchNAICS);
+	self.add(callTICbutton);
+	self.add(staffbutton);
+	
+	staffbutton.addEventListener('click',function(e)
+	{
+		var listView = USEACListView();
+		var listContainerWindow = Ti.UI.createWindow({
+			title:'Our Office Locations',
+			navBarHidden:false,
+			backgroundColor:'#ffffff'
 		});
- 		
 		
- 		self.add(headingLabel);
- 		self.add(mapView);
- 		self.add(useacbutton);
- 		self.add(searchHS);
- 		self.add(searchNAICS);
-		self.add(callTICbutton);
+		var button = Titanium.UI.createButton({
+			title:'<< Back',
+			left: 5,
+			top: 30,
+			width: 60,
+			height: 20
+		});
 		
-		staffbutton.addEventListener('click',function(e)
-		{
-			var listView = USEACListView();
-   			var listContainerWindow = Ti.UI.createWindow({
-   				title:'Our Office Locations',
-   				navBarHidden:false,
-   				backgroundColor:'#ffffff'
-   			});
-   			listContainerWindow.add(listView);
-   			listContainerWindow.addEventListener('click', function(e) {
+		button.addEventListener('click', function(e) {
+			var self = Ti.UI.createWindow({
+				backgroundColor:'#ffffff'
+			});
 				
-				self.fireEvent('itemSelected', {
-					city:e.rowData.city,
-					state:e.rowData.state,
-					staff:e.rowData.staff
-				});
-			});
-			listContainerWindow.open({modal:true});
-   			listContainerWindow.show();   				
-   		});
-   			
-		searchNAICS.addEventListener('click', function(e) {
-			var naicsView = NAICSListView();
-			var naicsWindow = Ti.UI.createWindow({
-				title: 'Search by Description',
-				navBarHidden: false,
-				backgroundColor: '#ffffff'
-			});
-			naicsWindow.add(naicsView);
-			naicsWindow.open({modal:true});
-			naicsWindow.show();
-		});
-		searchHS.addEventListener('click', function(e) {
-			var hsView = HSListView();
-			var hsWindow = Ti.UI.createWindow({
-				title: 'Search by Description',
-				navBarHidden: false,
-				backgroundColor: '#ffffff'
-			});
-			hsWindow.add(hsView);
-			hsWindow.open({modal:true});
-			hsWindow.show();
+			//construct UI
+			//var firstView = new FirstView();
+			var firstView = FirstView();
+			self.add(firstView);
+			self.open({modal:true});
+			self.show();
 		});
 		
-		return self;
+		listContainerWindow.add(button);
+		listContainerWindow.add(listView);
+/*
+ 		listContainerWindow.addEventListener('click', function(e) {
+			
+			self.fireEvent('itemSelected', {
+				city:e.rowData.city,
+				state:e.rowData.state,
+				staff:e.rowData.staff
+			});
+		});
+*/
+		listContainerWindow.open({modal:true});
+		listContainerWindow.show();   				
+	});
+		
+	searchNAICS.addEventListener('click', function(e) {
+		var naicsView = NAICSListView();
+		var naicsWindow = Ti.UI.createWindow({
+			title: 'Search by Description',
+			navBarHidden: false,
+			backgroundColor: '#ffffff'
+		});
+		naicsWindow.add(naicsView);
+		naicsWindow.open({modal:true});
+		naicsWindow.show();
+	});
+	searchHS.addEventListener('click', function(e) {
+		var hsView = HSListView();
+		var hsWindow = Ti.UI.createWindow({
+			title: 'Search by Description',
+			navBarHidden: false,
+			backgroundColor: '#ffffff'
+		});
+		hsWindow.add(hsView);
+		hsWindow.open({modal:true});
+		hsWindow.show();
+	});
+	
+	return self;
 }
 
 function MapView(viewTop) {
-	var MapModule = null;
 	var osname = Ti.Platform.osname;
 	
 	var isAndroid = (osname=='android') ? true : false;
-	if ( isAndroid ) {
-		MapModule = require('ti.map');
-	}
 	var db = Ti.Database.open('USEACdb');
 	var useacRS = db.execute('Select city, state, phone, blackberry, position, reportingunit, lat, lng from useacstaff group by city order by city');
 	var i = 0;
 	var annots = [];
-	
+	var Map = require('ti.map');
 	while (useacRS.isValidRow())
 	{
 		var aLoc = null;
-		if ( isAndroid ) {
-			aLoc = MapModule.createAnnotation({
-	    		latitude:useacRS.fieldByName('lat'),
-	    		longitude:useacRS.fieldByName('lng'),
-	    		pincolor:Titanium.Map.ANNOTATION_RED,
-	    		image:'/mydata/small_red_dot.png',
-	    		myid:i++, // Custom property to uniquely identify this annotation.
-	    		city:useacRS.fieldByName('city'),
-	    		state:useacRS.fieldByName('state')
-	    	});
-		} else {
-			var Map = require('ti.map');
-			var win = Titanium.UI.createWindow();
-			
-			aLoc = Map.createAnnotation({
-			    latitude:useacRS.fieldByName('lat'),
-			    longitude:useacRS.fieldByName('lng'),
-			    image:'/mydata/small_red_dot.png',
-			    pincolor:Map.ANNOTATION_RED,
-			    city:useacRS.fieldByName('city'),
-    			state:useacRS.fieldByName('state'),
-			    myid:i++ // Custom property to uniquely identify this annotation.
-			});
-/*
-			aLoc = Ti.Map.createAnnotation({
-    		latitude:useacRS.fieldByName('lat'),
-    		longitude:useacRS.fieldByName('lng'),
-    		pincolor:Titanium.Map.ANNOTATION_RED,
-    		image:'/mydata/small_red_dot.png',
-    		myid:i++, // Custom property to uniquely identify this annotation.
-    		city:useacRS.fieldByName('city'),
-    		state:useacRS.fieldByName('state')});
-*/
-    	}
+		aLoc = Map.createAnnotation({
+		    latitude:useacRS.fieldByName('lat'),
+		    longitude:useacRS.fieldByName('lng'),
+		    image:'/mydata/small_red_dot.png',
+		    pincolor:Map.ANNOTATION_BLUE,
+		    city:useacRS.fieldByName('city'),
+			state:useacRS.fieldByName('state'),
+			title:useacRS.fieldByName('city'),
+		    myid:i++ // Custom property to uniquely identify this annotation.
+		});
 		annots.push(aLoc);
 		useacRS.next();
 	}
-	var map1 = null;
-	if ( isAndroid ) {
-		map1 = MapModule.createView({
-			mapType: MapModule.NORMAL_TYPE,
-    		userLocation: true,
-    		animate: true,
-    		region: {latitude: 39.8282,  longitude: -98.35, latitudeDelta: 50, longitudeDelta: 50 },
-    		center: {x:0, y:0},
-    		height: '40%',
-    		top: viewTop,
-    		left: 0,
-    		width: '100%',
-    		annotations: annots});
-	} else {
-		var Map = require('ti.map');
-		var win = Titanium.UI.createWindow();
-		
-		map1 = Map.createView({
-		    mapType: Map.STANDARD_TYPE,
-		    region: {latitude: 39.8282,  longitude: -98.35, latitudeDelta: 50, longitudeDelta: 50 },
-		    animate:true,
-//		    regionFit:true,
-		    userLocation:true,
-    		center: {x:0, y:0},
-    		height: '40%',
-    		top: viewTop,
-    		left: 0,
-    		width: '100%',
-		    annotations:annots
-		});
-/*		
-		map1 = Titanium.Map.createView({
-			mapType: Titanium.Map.STANDARD_TYPE,
-    		userLocation: true,
-    		animate: true,
-    		region: {latitude: 39.8282,  longitude: -98.35, latitudeDelta: 50, longitudeDelta: 50 },
-    		center: {x:0, y:0},
-    		height: '40%',
-    		top: viewTop,
-    		left: 0,
-    		width: '100%',
-    		annotations: annots});
-*/
-    }
+	var map1 = Map.createView({
+	    mapType: Map.STANDARD_TYPE,
+	    region: {latitude: 39.8282,  longitude: -98.35, latitudeDelta: 50, longitudeDelta: 50 },
+	    animate:true,
+	    regionFit:true,
+	    userLocation:true,
+		center: {x:0, y:0},
+		height: '40%',
+		top: viewTop,
+		left: 0,
+		width: '100%',
+	    annotations:annots
+	});
+
 	map1.addEventListener('click', function(evt) {
-		alert("asfssaf");
-//		alert(evt.annotation);
-//	 	Ti.API.info("Annotation " + evt.title + " clicked, id: " + evt.annotation.myid);
+		var clicksource = evt.clicksource;
+	 	Ti.API.info("Annotation " + evt.title + " clicked, id: " + evt.annotation.myid);
 		var useacDetailWindow = Ti.UI.createWindow({
 			title:'Office Location: ' + evt.annotation.city + ', ' + evt.annotation.state,
 			navBarHidden:false,
 			backgroundColor:'#ffffff'
 		});
-		useacDetailWindow.add(useacView(10, evt.annotation.city, evt.annotation.state));
-		useacDetailWindow.open({});
+		useacDetailWindow.add(useacView(20, evt.annotation.city, evt.annotation.state, 0));
+		useacDetailWindow.open({modal:true});
 		useacDetailWindow.show();
 	});
-	
+
 	useacRS.close();
 	db.close();
 	return map1;
@@ -517,14 +368,19 @@ function calcDist(lat1, lon1, lat2, lon2){
 }
 
 // A view to show a USEAC and its staff
-function useacView(viewTop, city, state)
+function useacView(viewTop, city, state, from)
 {
-	var MapModule;
+	var Map = require('ti.map');
 	var osname = Ti.Platform.osname;
 	var isAndroid = (osname=='android') ? true : false;
-	if ( isAndroid ) {
-		MapModule = require('ti.map');
-	}  			
+	var nftSize = (osname=='android' || osname=='ipad') ? 40 : 23;
+	var nlblftSize = (osname=='android' || osname=='ipad') ? 30 : 17;
+	var niconSize = (osname=='android' || osname=='ipad') ? 64 : 40;
+	var niconPos1 = (osname=='android') ? 400 : 200;
+	niconPos1 = (osname=='ipad') ? 550 : niconPos1;
+	var niconPos2 = (osname=='android') ? 500 : 260;
+	niconPos2 = (osname=='ipad') ? 650 : niconPos2;
+	var logoHeight = (osname=='android' || osname=='ipad') ? '20%' : '16%';
 	var self = Ti.UI.createView({
 			backgroundColor:'#C1D6D6',
 			top:viewTop,
@@ -535,7 +391,7 @@ function useacView(viewTop, city, state)
 		});
 	var headingLabel = Titanium.UI.createLabel({
 			color: '#900',
-  			font: { fontSize:40 },
+  			font: { fontSize:nftSize },
   			shadowColor: '#aaa',
   			shadowOffset: {x:5, y:5},
   			shadowRadius: 3,
@@ -545,10 +401,80 @@ function useacView(viewTop, city, state)
 		});
 	var image = Ti.UI.createImageView({
 			width:'25%',
-			height:'20%',
-			top:10,
+			height:logoHeight,
+			top:0,
 			image:'/images/CSlogo4insquare.png'
 		});			
+		
+	var button = Titanium.UI.createButton({
+		title:'<< Back',
+		left: 5,
+		top: 10,
+		width: 60,
+		height: 20
+	});
+	
+	button.addEventListener('click', function(e) {
+		var self = Ti.UI.createWindow({
+			backgroundColor:'#ffffff'
+		});
+			
+		//construct UI
+		if(from == 0)
+		{
+			var firstView = FirstView();
+			self.add(firstView);
+			self.open({modal:true});
+			self.show();
+		}
+		else
+		{
+			var listView = USEACListView();
+			var listContainerWindow = Ti.UI.createWindow({
+				title:'Our Office Locations',
+				navBarHidden:false,
+				backgroundColor:'#ffffff'
+			});
+			
+			var button = Titanium.UI.createButton({
+				title:'<< Back',
+				left: 5,
+				top: 30,
+				width: 60,
+				height: 20
+			});
+			
+			button.addEventListener('click', function(e) {
+				var self = Ti.UI.createWindow({
+					backgroundColor:'#ffffff'
+				});
+					
+				//construct UI
+				//var firstView = new FirstView();
+				var firstView = FirstView();
+				self.add(firstView);
+				self.open({modal:true});
+				self.show();
+			});
+			
+			listContainerWindow.add(button);
+			listContainerWindow.add(listView);
+	/*
+	 		listContainerWindow.addEventListener('click', function(e) {
+				
+				self.fireEvent('itemSelected', {
+					city:e.rowData.city,
+					state:e.rowData.state,
+					staff:e.rowData.staff
+				});
+			});
+	*/
+			listContainerWindow.open({modal:true});
+			listContainerWindow.show();   				
+		}				
+	});
+	
+	self.add(button);
 	self.add(image);
  	self.add(headingLabel);
 	
@@ -556,7 +482,7 @@ function useacView(viewTop, city, state)
  	var table_data = [];
 	var i = 0;
 	var db = Ti.Database.open('USEACdb');
-	var staffNameRS = db.execute('Select staff, city, state, phone, blackberry, position from useacstaff where city=? and state=?', city, state);
+	var staffNameRS = db.execute('Select staff, city, state, phone, blackberry, position, lat, lng from useacstaff where city=? and state=?', city, state);
 	var lat=0.0;
 	var lng = 0.0;
 	while (staffNameRS.isValidRow())
@@ -570,11 +496,12 @@ function useacView(viewTop, city, state)
   			bb:staffNameRS.fieldByName('blackberry'),
   			rowIndex:i++
   		});
+  		row.selectionStyle = 'none';
   		var staffLabel = Ti.UI.createLabel({
     		color:'#576996',
-    		font:{fontFamily:'Arial', fontSize:30, fontWeight:'bold'},
+    		font:{fontFamily:'Arial', fontSize:nlblftSize, fontWeight:'bold'},
     		left:20,
-    		height:80,
+    		height:niconSize+10,
     		text:staffNameRS.fieldByName('staff')
 	  	});
 	  	
@@ -585,16 +512,16 @@ function useacView(viewTop, city, state)
 	  	if ( staffNameRS.fieldByName('blackberry') == null ) {
 	  		smsButton = Ti.UI.createImageView({
 	  		image:'/images/Messages-Android-Disabled.png',
-	  		width:64,
-	  		height:64,
-	  		left:450,});
+	  		width:niconSize,
+	  		height:niconSize,
+	  		left:niconPos1});
 	  		smsButton.setEnabled(false);
 	  	} else {
 	  		smsButton = Ti.UI.createImageView({
 	  		image:'/images/Messages-Android-R.png',
-	  		width:64,
-	  		height:64,
-	  		left:450});
+	  		width:niconSize,
+	  		height:niconSize,
+	  		left:niconPos1});
 	  		smsButton.addEventListener('click', function(e) {
 	  			if ( isAndroid ) {
 	  				var intent = Ti.Android.createIntent({
@@ -603,6 +530,8 @@ function useacView(viewTop, city, state)
 					});
 					intent.putExtra('sms_body', 'new message');
 					Ti.Android.currentActivity.startActivity(intent);
+				} else{
+					Titanium.Platform.openURL('sms:' + row.bb);
 				}
 	  		});
 	  	}
@@ -612,16 +541,16 @@ function useacView(viewTop, city, state)
 	  	if (staffNameRS.fieldByName('phone') == null ){
 	  		phoneButton = Ti.UI.createImageView({
 	  		image:'/images/ic_action_call.png',
-	   		width:64,
-	  		height:64,
-	  		left:575});
+	   		width:niconSize,
+	  		height:niconSize,
+	  		left:niconPos2});
 	  		phoneButton.setEnabled(false);
 	  	} else {
 	  		phoneButton = Ti.UI.createImageView({
-	  		image:'/images/phone-icon.png',
-	  		width:64,
-	  		height:64,
-	  		left:575});
+	  		image:'/images/phone-icon1.png',
+	  		width:niconSize,
+	  		height:niconSize,
+	  		left:niconPos2});
 	  		phoneButton.addEventListener('click', function(e) {
 	  			if ( isAndroid ) {
 	  				var intent = Ti.Android.createIntent({
@@ -629,6 +558,8 @@ function useacView(viewTop, city, state)
 					data: 'tel:' + row.phone
 					});
 					Ti.Android.currentActivity.startActivity(intent);
+				} else {
+					Titanium.Platform.openURL('tel:' + row.phone);
 				}
 	  		});
 	  	}
@@ -639,29 +570,11 @@ function useacView(viewTop, city, state)
 	staffNameRS.close();
 	db.close();
 	i = 0;
-	var useacLoc = null;
-	if ( isAndroid ) {
-		useacLoc = MapModule.createAnnotation({
-    		latitude:lat,
-    		longitude:lng,
-    		myid:i++ // Custom property to uniquely identify this annotation.
-		});
-	
-		
-	} else {
-		useacLoc = Map.createAnnotation({
-		    latitude:lat,
-		    longitude:lng,
-    		myid:i++ // Custom property to uniquely identify this annotation.
-		});
-/*		
- 		useacLoc = Ti.Map.createAnnotation({
-    		latitude:lat,
-    		longitude:lng,
-    		myid:i++ // Custom property to uniquely identify this annotation.
-		});
-*/
-	}
+	var useacLoc = Map.createAnnotation({
+	    latitude:lat,
+	    longitude:lng,
+		myid:i++ // Custom property to uniquely identify this annotation.
+	});
 	
 	var tblView = Ti.UI.createTableView({backgroundColor:'transparent',
 			top:10,
@@ -715,7 +628,7 @@ function NAICSListView() {
    		barColor:'#77B121',
    		height:85,
    		hintText:'Enter description',
-   		top:10});
+   		top:0});
  
 	//AUTOCOMPLETE TABLE
 	var table_data = [];
@@ -750,14 +663,30 @@ function NAICSListView() {
 	    search.blur();
 	});
 
-	var bb1 = Titanium.UI.createButton({
-	    title:'Back',
-	    backgroundColor:'#336699',
-	    top:20,
-	    height:25,
-	    width:50
+
+	var button = Titanium.UI.createButton({
+		title:'<< Back',
+		left: 5,
+		top: 20,
+		width: 60,
+		height: 20
 	});
-	//self.add(bb1);
+	
+	button.addEventListener('click', function(e) {
+		var self = Ti.UI.createWindow({
+			backgroundColor:'#ffffff'
+		});
+			
+		//construct UI
+		//var firstView = new FirstView();
+		var firstView = FirstView();
+		self.add(firstView);
+		self.open({modal:true});
+		self.show();
+	});
+	
+	self.add(button);
+	
 	self.add(search);
 	
 	//self.add(search);
@@ -835,7 +764,7 @@ function HSListView() {
    		barColor:'#77B121',
    		height:85,
    		hintText:'Enter description',
-   		top:10});
+   		top:0});
  
 	//AUTOCOMPLETE TABLE
 	var table_data = [];
@@ -865,6 +794,28 @@ function HSListView() {
 	    search.blur();
 	});
 	
+	var button = Titanium.UI.createButton({
+		title:'<< Back',
+		left: 5,
+		top: 20,
+		width: 60,
+		height: 20
+	});
+	
+	button.addEventListener('click', function(e) {
+		var self = Ti.UI.createWindow({
+			backgroundColor:'#ffffff'
+		});
+			
+		//construct UI
+		//var firstView = new FirstView();
+		var firstView = FirstView();
+		self.add(firstView);
+		self.open({modal:true});
+		self.show();
+	});
+	
+	self.add(button);
 	self.add(search);
 	self.add(autocomplete_table);
 	return self;
@@ -931,6 +882,9 @@ function USEACListView() {
 //	var db = Ti.Database.install('/mydata/address.sqlite', 'USEACdb');
 	var db = Ti.Database.open('USEACdb');
 	
+	var label = Ti.UI.createLabel({text:'Global Markets'});
+	//first.add(label);
+	
 	//label using localization-ready strings from <app dir>/i18n/en/strings.xml
 	var tbl_data = [];
 	var i = 0;
@@ -967,24 +921,26 @@ function USEACListView() {
 	db.close();
 		
 	var self = Ti.UI.createTableView({backgroundColor:'transparent',
-	top:10,
-	left:0,
-	width:'100%',
-	height:'100%',
-	layout:'vertical',
-	data: tbl_data});
+		hasChild: true,
+		hasDetail: true,
+		top:60,
+		left:0,
+		width:'100%',
+		height:'100%',
+		layout:'vertical',
+		data: tbl_data
+	});
 	self.addEventListener('click', function(e) {
 		/* Open the USEAC Detail View */		
 		var useacDetailWindow = Ti.UI.createWindow({
-   					title:'Office Location: ' + e.rowData.city + ', ' + e.rowData.state,
-   					navBarHidden:false,
-   					backgroundColor:'#ffffff'
-   					});
-   			useacDetailWindow.add(useacView(10, e.rowData.city, e.rowData.state));
-   			useacDetailWindow.open({});
-   			useacDetailWindow.show();
+			title:'Office Location: ' + e.rowData.city + ', ' + e.rowData.state,
+			navBarHidden:false,
+			backgroundColor:'#ffffff'
+		});
+		useacDetailWindow.add(useacView(20, e.rowData.city, e.rowData.state, 1));
+		useacDetailWindow.open({modal:true});
+		useacDetailWindow.show();
 	});
-	
 	return self;
 }
 module.exports = FirstView, USEACListView;

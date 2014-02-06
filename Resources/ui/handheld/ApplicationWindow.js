@@ -1,7 +1,7 @@
 //Application Window Component Constructor
 function ApplicationWindow() {
 	//load component dependencies
-	var db = Ti.Database.install('/mydata/address.sqlite', 'USEACdb');
+//	var db = Ti.Database.install('/mydata/address.sqlite', 'USEACdb');
 	
 	var CheckOneTimePassword = require('ui/common/CheckOneTimePassword');
 		
