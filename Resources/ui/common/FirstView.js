@@ -102,6 +102,7 @@ function FirstView() {
    			borderRadius: 10,
    			color: '#4989ff',
    			font: { fontSize:20 },
+   			backgroundImage:'/images/Messages-Android-R-pad.png',
 			backgroundColor: '#e1e1e1',
    			top: buttonTop,
    			width: '90%',
@@ -157,10 +158,12 @@ function FirstView() {
  		});
  		
 		staffbutton = Titanium.UI.createButton({
-   			title: 'Contact Us',
+   			title: '	Contact Us',
    			borderRadius: 10,
    			top: buttonTop,
    			font: { fontSize:14 },
+   			color: '#4989ff',
+   			backgroundImage:'/images/Messages-Android-R-phone.png',
 			backgroundColor: '#e1e1e1',
    			width: '90%',
    			height: '8%'
