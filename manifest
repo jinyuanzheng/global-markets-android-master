@@ -1,0 +1,9 @@
+#appname:GlobalMarket
+#appid:com.frumpletown.develop
+#type:mobile
+#guid:7360a561-3406-4ded-ae04-76811389bfac
+#version:1.0
+#publisher:Anand Basu
+#url:http://
+#image:appicon.png
+#desc:A simple app to call or text US based USFCS trade specialists, find the nearest USFCS office based on GPS location and call the Trade Information Center (TIC)

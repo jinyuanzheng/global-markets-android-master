@@ -1,0 +1,17 @@
+android/ATTR_MINIFY=true
+android/ATTR_PROJECT_NAME=GlobalMarkets
+android/abi=armeabi-v7a
+android/distribute_path=/Users/anandbasu/Documents/distro
+android/keystore_alias=globalmarkets
+android/keystore_password=vu2hin
+android/keystore_path=/Users/anandbasu/android.keystore
+android/recent_output=/Users/anandbasu/Documents/distro
+android/sdk_version=Google APIs (Android 4.3)
+eclipse.preferences.version=1
+iosLaunchConfigurationAttributes/ATTR_MINIFY=true
+iosLaunchConfigurationAttributes/ATTR_PROJECT_NAME=GlobalMarkets
+iosLaunchConfigurationAttributes/appid=com.basuanand.globalmarkets
+iosLaunchConfigurationAttributes/certificate=Anand Basu (V2AMZXJV9G)
+iosLaunchConfigurationAttributes/keychain=
+iosLaunchConfigurationAttributes/sdk_version=7.0
+iosLaunchConfigurationAttributes/uuid=B493DE3B-1C3D-4314-8355-081E12606FB8
